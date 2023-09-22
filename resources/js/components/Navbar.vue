@@ -1,5 +1,5 @@
 <template>
-    <nav>
+    <nav class="bg-red-700">
         <ul>
             <li><router-link to="/">Form</router-link></li>
             <li><router-link to="/tables">Tables</router-link></li>
