@@ -30,5 +30,28 @@ class TasksController extends Controller
 
         return response()->json($dataList, 200);
     }
+
+    public function updateData(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'start_date' => 'required|date',
+            'name' => 'required|string|max:50',
+            'task' => 'required|string|max:50',
+            'product' => 'required|string|max:250',
+            'scheduled_time' => 'nullable',
+            'actual_time' => 'nullable',
+            'finish_date' => 'nullable',
+        ]);
+
+        $record = Tasks::find($id);
+
+        if (!$record) {
+            return response()->json(['message' => 'Record not found'], 404);
+        }
+
+        $record->update($validatedData);
+
+        return response()->json(['message' => 'Record updated successfully'], 200);
+    }
     
 }
