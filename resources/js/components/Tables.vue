@@ -11,23 +11,23 @@
                 </h3>
                 <div class="border flex flex-col gap-1 bg-white rounded">
                     <div class="flex justify-between px-2">
-                        <p class="w-1/7 break-words text-center font-bold">
+                        <p class="w-[18%] break-words text-center font-bold">
                             {{ group[0].task_type }}
                         </p>
-                        <p class="w-1/7 break-words text-center font-bold">
+                        <p class="w-[18%] break-words text-center font-bold">
                             ამოცანის პროდუქტი
                         </p>
-                        <p class="w-1/7 break-words text-center font-bold">
+                        <p class="w-[18%] break-words text-center font-bold">
                             დაგეგმილი დრო
                         </p>
-                        <p class="w-1/7 break-words text-center font-bold">
+                        <p class="w-[18%] break-words text-center font-bold">
                             ფაქტიური დრო
                         </p>
-                        <p class="w-1/7 break-words text-center font-bold">
+                        <p class="w-[18%] break-words text-center font-bold">
                             შესრულების თარიღი
                         </p>
-                        <p class="w-1/7 break-words text-center"></p>
-                        <p class="w-1/7 break-words text-center"></p>
+                        <p class="w-[5%] break-words text-center"></p>
+                        <p class="w-[5%] break-words text-center"></p>
                     </div>
 
                     <div
@@ -36,32 +36,32 @@
                         class="flex border justify-between px-2 w-full"
                     >
                         <div class="flex justify-between px-2 w-full">
-                            <p class="w-1/7 break-words text-center">
+                            <p class="w-[18%] break-words text-center">
                                 {{ item.task }}
                             </p>
-                            <p class="w-1/7 break-words text-center">
+                            <p class="w-[18%] break-words text-center">
                                 {{ item.product }}
                             </p>
-                            <p class="w-1/7 break-words text-center">
+                            <p class="w-[18%] break-words text-center">
                                 {{ item.scheduled_time }}
                             </p>
-                            <p class="w-1/7 break-words text-center">
+                            <p class="w-[18%] break-words text-center">
                                 {{ item.actual_time }}
                             </p>
-                            <p class="w-1/7 break-words text-center">
+                            <p class="w-[18%] break-words text-center">
                                 {{ item.finish_date }}
                             </p>
-                            <div class="w-1/7">
+                            <div class="w-[5%]">
                                 <button
-                                    class="bg-blue-500 h-[40px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-3 rounded-full"
                                     @click="showUpdateForm(item)"
                                 >
                                     Update
                                 </button>
                             </div>
-                            <div class="w-1/7">
+                            <div class="w-[5%]">
                                 <button
-                                    class="bg-red-500 h-[40px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                    class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-3 rounded-full"
                                     @click="deleteItem(item.id)"
                                 >
                                     Delete
@@ -72,13 +72,16 @@
                             v-if="item.id === selectedItemId"
                             :item-data="item"
                             :update-data-list="updateDataList"
+                            :close-form="closeForm"
                         />
                     </div>
                     <div class="flex px-2">
-                        <div class="w-1/7"></div>
-                        <div class="w-1/7"></div>
-                        <div class="w-1/7 text-center font-bold">სულ დრო:</div>
-                        <div class="w-1/7 text-center font-bold">
+                        <div class="w-[18%]"></div>
+                        <div class="w-[18%]"></div>
+                        <div class="w-[18%] text-center font-bold">
+                            სულ დრო:
+                        </div>
+                        <div class="w-[18%] text-center font-bold">
                             {{
                                 calculateTotalScheduledTime(
                                     group,
@@ -86,7 +89,7 @@
                                 )
                             }}
                         </div>
-                        <div class="w-1/7 text-center font-bold">
+                        <div class="w-[18%] text-center font-bold">
                             {{
                                 calculateTotalScheduledTime(
                                     group,
@@ -94,8 +97,8 @@
                                 )
                             }}
                         </div>
-                        <div class="w-1/7"></div>
-                        <div class="w-1/7"></div>
+                        <div class="w-[5%]"></div>
+                        <div class="w-[5%]"></div>
                     </div>
                 </div>
             </div>
@@ -174,6 +177,10 @@ export default {
             }
 
             // Clear the selectedItemId to close the update form
+            this.selectedItemId = null;
+        },
+
+        closeForm() {
             this.selectedItemId = null;
         },
 

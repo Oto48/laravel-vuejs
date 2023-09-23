@@ -1,6 +1,8 @@
 <template>
-    <Navbar />
-    <router-view />
+    <div class="min-h-screen bg-darkBlue">
+        <Navbar />
+        <router-view />
+    </div>
 </template>
 <script>
 import Navbar from "./Navbar.vue";

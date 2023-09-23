@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-[#161d2f]">
+    <nav class="bg-semiDarkBlue">
         <ul
             class="flex justify-center h-16 items-center gap-60 text-white text-lg font-bold"
         >
