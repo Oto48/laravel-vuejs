@@ -13,6 +13,9 @@
             <label for="name">First Name:</label>
             <input type="text" id="name" v-model="updatedData.name" required />
 
+            <label for="task">Task Type:</label>
+            <input type="text" id="task_type" v-model="updatedData.task_type" />
+
             <label for="task">Task:</label>
             <input type="text" id="task" v-model="updatedData.task" />
 
@@ -64,6 +67,14 @@ export default {
     },
     methods: {
         updateData() {
+            if (this.updatedData.scheduled_time.length === 5) {
+                this.updatedData.scheduled_time += ":00";
+            }
+
+            if (this.updatedData.scheduled_time.length === 5) {
+                this.updatedData.actual_time += ":00";
+            }
+
             const updatedData = this.updatedData;
 
             axios

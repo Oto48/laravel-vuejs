@@ -11,7 +11,8 @@ class TasksController extends Controller
         $validatedData = $request->validate([
             'start_date' => 'required|date',
             'name' => 'required|string|max:50',
-            'task' => 'required|string|max:50',
+            'task_type' => 'required|string|max:100',
+            'task' => 'required|string|max:250',
             'product' => 'required|string|max:250',
             'scheduled_time' => 'nullable',
             'actual_time' => 'nullable',
@@ -36,6 +37,7 @@ class TasksController extends Controller
         $validatedData = $request->validate([
             'start_date' => 'required|date',
             'name' => 'required|string|max:50',
+            'task_type' => 'required|string|max:100',
             'task' => 'required|string|max:50',
             'product' => 'required|string|max:250',
             'scheduled_time' => 'nullable',
@@ -52,6 +54,19 @@ class TasksController extends Controller
         $record->update($validatedData);
 
         return response()->json(['message' => 'Record updated successfully'], 200);
+    }
+
+    public function deleteItem($id)
+    {
+        try {
+            $item = Tasks::findOrFail($id);
+
+            $item->delete();
+
+            return response()->json(['message' => 'Item deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error deleting item', 'error' => $e->getMessage()], 500);
+        }
     }
     
 }

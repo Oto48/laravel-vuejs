@@ -1,6 +1,8 @@
 <template>
-    <nav class="bg-red-700">
-        <ul class="flex justify-center items-center gap-60">
+    <nav class="bg-[#161d2f]">
+        <ul
+            class="flex justify-center h-16 items-center gap-60 text-white text-lg font-bold"
+        >
             <li><router-link to="/">Form</router-link></li>
             <li><router-link to="/tables">Tables</router-link></li>
         </ul>
