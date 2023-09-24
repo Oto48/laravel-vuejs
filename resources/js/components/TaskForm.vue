@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import FormComponent from "./formComponent.vue";
+import FormComponent from "@/components/FormComponent.vue";
 
 export default {
     components: {

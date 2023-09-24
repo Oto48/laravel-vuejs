@@ -12,19 +12,19 @@
                 <div class="border flex flex-col gap-1 bg-white rounded">
                     <div class="flex justify-between px-2">
                         <p class="w-[18%] break-words text-center font-bold">
-                            დასახელება
+                            {{ group[0].task_type }}
                         </p>
                         <p class="w-[18%] break-words text-center font-bold">
-                            განზომილება
+                            ამოცანის პროდუქტი
                         </p>
                         <p class="w-[18%] break-words text-center font-bold">
-                            რაოდენობა გასული კვირის
+                            დაგეგმილი დრო
                         </p>
                         <p class="w-[18%] break-words text-center font-bold">
-                            კვოტა მიმდინარე კვირის
+                            ფაქტიური დრო
                         </p>
                         <p class="w-[18%] break-words text-center font-bold">
-                            შენიშვნა
+                            შესრულების თარიღი
                         </p>
                         <p class="w-[5%] break-words text-center"></p>
                         <p class="w-[5%] break-words text-center"></p>
@@ -37,19 +37,19 @@
                     >
                         <div class="flex justify-between px-2 w-full">
                             <p class="w-[18%] break-words text-center">
-                                {{ item.statistics_name }}
+                                {{ item.task }}
                             </p>
                             <p class="w-[18%] break-words text-center">
-                                {{ item.dimension }}
+                                {{ item.product }}
                             </p>
                             <p class="w-[18%] break-words text-center">
-                                {{ item.quantity }}
+                                {{ item.scheduled_time }}
                             </p>
                             <p class="w-[18%] break-words text-center">
-                                {{ item.quota }}
+                                {{ item.actual_time }}
                             </p>
                             <p class="w-[18%] break-words text-center">
-                                {{ item.note }}
+                                {{ item.finish_date }}
                             </p>
                             <div class="w-[5%]">
                                 <button
@@ -75,6 +75,31 @@
                             :close-form="closeForm"
                         />
                     </div>
+                    <div class="flex px-2">
+                        <div class="w-[18%]"></div>
+                        <div class="w-[18%]"></div>
+                        <div class="w-[18%] text-center font-bold">
+                            სულ დრო:
+                        </div>
+                        <div class="w-[18%] text-center font-bold">
+                            {{
+                                calculateTotalScheduledTime(
+                                    group,
+                                    "scheduled_time"
+                                )
+                            }}
+                        </div>
+                        <div class="w-[18%] text-center font-bold">
+                            {{
+                                calculateTotalScheduledTime(
+                                    group,
+                                    "actual_time"
+                                )
+                            }}
+                        </div>
+                        <div class="w-[5%]"></div>
+                        <div class="w-[5%]"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,7 +107,7 @@
 </template>
 
 <script>
-import UpdateForm from "./StatisticsUpdateForm.vue";
+import UpdateForm from "@/components/UpdateForm.vue";
 import axios from "axios";
 
 export default {
@@ -104,7 +129,7 @@ export default {
             const groups = {};
 
             this.dataList.forEach((item) => {
-                const key = `${item.name}`;
+                const key = `${item.name}-${item.start_date}-${item.task_type}`;
 
                 if (!groups[key]) {
                     groups[key] = [];
@@ -113,14 +138,22 @@ export default {
                 groups[key].push(item);
             });
 
-            return Object.values(groups);
+            const sortedGroups = Object.values(groups).sort(
+                (groupA, groupB) => {
+                    const dateA = groupA[0].start_date;
+                    const dateB = groupB[0].start_date;
+                    return dateA.localeCompare(dateB);
+                }
+            );
+
+            return Object.values(sortedGroups);
         },
     },
 
     methods: {
         fetchData() {
             axios
-                .get("/api/get-statistics")
+                .get("/api/get-data")
                 .then((response) => {
                     this.dataList = response.data;
                 })
@@ -153,7 +186,7 @@ export default {
 
         deleteItem(itemId) {
             axios
-                .delete(`/api/delete-statistic/${itemId}`)
+                .delete(`/api/delete-data/${itemId}`)
                 .then(() => {
                     this.dataList = this.dataList.filter(
                         (item) => item.id !== itemId
@@ -162,6 +195,27 @@ export default {
                 .catch((error) => {
                     console.error("Error deleting item:", error);
                 });
+        },
+
+        calculateTotalScheduledTime(group, type) {
+            let totalTime = 0;
+
+            group.forEach((item) => {
+                const [hours, minutes, seconds] = item[type]
+                    .split(":")
+                    .map(Number);
+
+                const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+                totalTime += totalSeconds;
+            });
+
+            // Convert the cumulative total back to HH:MM:SS format
+            const hours = Math.floor(totalTime / 3600);
+            const minutes = Math.floor((totalTime % 3600) / 60);
+            const seconds = totalTime % 60;
+
+            return `${hours}:${minutes}:${seconds}`;
         },
     },
 };
