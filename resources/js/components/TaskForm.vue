@@ -3,6 +3,7 @@
         <form-component
             :formFields="formFields"
             :submitButtonText="submitButtonText"
+            :taskForm="true"
         ></form-component>
     </div>
 </template>

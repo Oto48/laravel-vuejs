@@ -111,6 +111,10 @@ export default {
             type: String,
             default: "Submit",
         },
+        taskForm: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -128,27 +132,29 @@ export default {
     },
     methods: {
         submitForm() {
-            // axios
-            //     .post("/api/add-data", this.formData)
-            //     .then((response) => {
-            //         console.log("Data added successfully:", response.data);
-            //         this.formData = {};
-            //         this.$router.push("/tables");
-            //     })
-            //     .catch((error) => {
-            //         console.error("Error adding data:", error);
-            //     });
-
-            axios
-                .post("/api/add-statistic", this.formData)
-                .then((response) => {
-                    console.log("Data added successfully:", response.data);
-                    this.formData = {};
-                    this.$router.push("/tables");
-                })
-                .catch((error) => {
-                    console.error("Error adding data:", error);
-                });
+            if (this.taskForm) {
+                axios
+                    .post("/api/add-data", this.formData)
+                    .then((response) => {
+                        console.log("Data added successfully:", response.data);
+                        this.formData = {};
+                        this.$router.push("/tables");
+                    })
+                    .catch((error) => {
+                        console.error("Error adding data:", error);
+                    });
+            } else {
+                axios
+                    .post("/api/add-statistic", this.formData)
+                    .then((response) => {
+                        console.log("Data added successfully:", response.data);
+                        this.formData = {};
+                        this.$router.push("/tables");
+                    })
+                    .catch((error) => {
+                        console.error("Error adding data:", error);
+                    });
+            }
         },
     },
 };

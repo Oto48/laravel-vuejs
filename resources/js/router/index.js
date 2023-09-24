@@ -1,17 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import form from "../components/Form.vue";
-import StatisticsForm from "../components/StatisticsForm.vue";
 import tables from "../components/Tables.vue";
 import StatisticsTable from "../components/StatisticsTable.vue";
+import FormPage from "../components/FormPage.vue";
 
 const routes = [
     {
         path: "/",
-        component: form,
-    },
-    {
-        path: "/statistics",
-        component: StatisticsForm,
+        component: FormPage,
     },
     {
         path: "/tables",
