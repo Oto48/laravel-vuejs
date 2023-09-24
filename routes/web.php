@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/statistics', function () {
+    return view('welcome');
+});
 Route::get('/tables', function () {
+    return view('welcome');
+});
+Route::get('/statisticstable', function () {
     return view('welcome');
 });

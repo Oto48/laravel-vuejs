@@ -18,8 +18,6 @@ class CreateTasksTable extends Migration
             $table->time('scheduled_time')->nullable();
             $table->time('actual_time')->nullable();
             $table->date('finish_date')->nullable();
-
-            $table->timestamps();
         });
     }
 
