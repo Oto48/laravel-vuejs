@@ -196,7 +196,7 @@ export default {
                 this.updatedData.scheduled_time += ":00";
             }
 
-            if (this.updatedData.scheduled_time.length === 5) {
+            if (this.updatedData.actual_time.length === 5) {
                 this.updatedData.actual_time += ":00";
             }
 

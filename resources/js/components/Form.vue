@@ -183,6 +183,19 @@ export default {
                 .post("/api/add-data", this.formData)
                 .then((response) => {
                     console.log("Data added successfully:", response.data);
+
+                    this.formData = {
+                        start_date: "",
+                        name: "",
+                        task_type: "",
+                        task: "",
+                        product: "",
+                        scheduled_time: "",
+                        actual_time: "",
+                        finish_date: "",
+                    };
+
+                    this.$router.push("/tables");
                 })
                 .catch((error) => {
                     console.error("Error adding data:", error);
